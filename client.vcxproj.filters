@@ -27,6 +27,9 @@
     <ClCompile Include="ransomware.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="persist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="http.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ransomware.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="persist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

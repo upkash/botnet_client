@@ -1,5 +1,7 @@
 #include <stdio.h>
-
+#include <sstream>
+#include <cctype>
+#include <iomanip>
 #include <string>
 #include <iostream>
 #include <windows.h>
@@ -20,6 +22,28 @@ wstring s2ws(const string& s)
     return r;
 }
 
+string url_encode(const string& value) {
+    ostringstream escaped;
+    escaped.fill('0');
+    escaped << hex;
+
+    for (string::const_iterator i = value.begin(), n = value.end(); i != n; ++i) {
+        string::value_type c = (*i);
+
+        // Keep alphanumeric and other accepted characters intact
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            escaped << c;
+            continue;
+        }
+
+        // Any other characters are percent-encoded
+        escaped << uppercase;
+        escaped << '%' << setw(2) << int((unsigned char)c);
+        escaped << nouppercase;
+    }
+
+    return escaped.str();
+}
 
 string send_get(string host, string endpoint) {
     wstring url = s2ws(endpoint);
@@ -99,9 +123,12 @@ string send_get(string host, string endpoint) {
 
 
         // Report any errors.
-        if (!bResults)
-            //printf("Error %d has occurred.\n", GetLastError());
+        if (!bResults) {
+            //cout << "Error %d has occurred.\n", GetLastError();
+            cout << "FUCK" << endl;
             return "ERROR";
+        }
+        
 
         // Close any open handles.
         if (hRequest) WinHttpCloseHandle(hRequest);
@@ -110,7 +137,7 @@ string send_get(string host, string endpoint) {
         return result;
 }
 
-string send_post(string host, string endpoint, string data) {
+string send_post(string host, string endpoint, string data_type, string data) {
     wstring url = s2ws(endpoint);
     wstring domain = s2ws(host);
     //wstring wdata = s2ws(data);
@@ -125,6 +152,17 @@ string send_post(string host, string endpoint, string data) {
         hConnect = NULL,
         hRequest = NULL;
 
+    wstring header;
+    if (data_type == "json") {
+        header = L"Content-Type: application/json\r\n";
+    }
+    else if (data_type == "form") {
+        header = L"Content-Type: application/x-www-form-urlencoded\r\n";
+    }
+    else {
+        cout << "CUNT" << endl;
+        return "ERROR_end";
+    }
     // Use WinHttpOpen to obtain a session handle.
     hSession = WinHttpOpen(L"WinHTTP Example/1.0",
         WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
@@ -143,10 +181,10 @@ string send_post(string host, string endpoint, string data) {
             WINHTTP_DEFAULT_ACCEPT_TYPES,
             0);
     cout << "Opened a request" << endl;
-    // Send a request.
+    
     if (hRequest)
         bResults = WinHttpSendRequest(hRequest,
-            L"Content-Type: application/json\r\n",
+            header.c_str(),
             0, (LPVOID)wdata, data_len,
             data_len, 0);
     cout << "Sent the request" << endl;
@@ -192,7 +230,7 @@ string send_post(string host, string endpoint, string data) {
 
         // Report any errors.
         if (!bResults)
-            //printf("Error %d has occurred.\n", GetLastError());
+            printf("Error %d has occurred.\n", GetLastError());
             return "ERROR";
 
         // Close any open handles.
