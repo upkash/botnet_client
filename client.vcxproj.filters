@@ -18,9 +18,6 @@
     <ClCompile Include="client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="http.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="bot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -28,6 +25,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="persist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="http.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

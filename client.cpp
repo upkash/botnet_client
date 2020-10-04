@@ -116,7 +116,8 @@ string exec_shell_cmd(string cmd) {
 
 }
 
-int main()
+int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+//int main()
 {
     set_run();
     char username[UNLEN + 1];

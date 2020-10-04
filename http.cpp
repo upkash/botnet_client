@@ -128,7 +128,7 @@ string send_get(string host, string endpoint) {
             cout << "FUCK" << endl;
             return "ERROR";
         }
-        
+
 
         // Close any open handles.
         if (hRequest) WinHttpCloseHandle(hRequest);
@@ -181,7 +181,7 @@ string send_post(string host, string endpoint, string data_type, string data) {
             WINHTTP_DEFAULT_ACCEPT_TYPES,
             0);
     cout << "Opened a request" << endl;
-    
+
     if (hRequest)
         bResults = WinHttpSendRequest(hRequest,
             header.c_str(),
@@ -229,10 +229,10 @@ string send_post(string host, string endpoint, string data_type, string data) {
 
 
         // Report any errors.
-        if (!bResults)
+        if (!bResults) {
             printf("Error %d has occurred.\n", GetLastError());
             return "ERROR";
-
+        }
         // Close any open handles.
         if (hRequest) WinHttpCloseHandle(hRequest);
         if (hConnect) WinHttpCloseHandle(hConnect);

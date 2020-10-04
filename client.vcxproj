@@ -90,7 +90,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -120,6 +120,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,10 +142,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp" />
-    <ClCompile Include="http.cpp" />
     <ClCompile Include="bot.cpp" />
     <ClCompile Include="ransomware.cpp" />
     <ClCompile Include="persist.cpp" />
+    <ClCompile Include="http.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bot.h" />
